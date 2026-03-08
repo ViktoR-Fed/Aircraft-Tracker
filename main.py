@@ -383,7 +383,7 @@ def user_interaction() -> None:
             print(f"На земле: {on_ground}")
 
             if altitudes:
-                print(f"\nВысота (м):")
+                print("\nВысота (м):")
                 print(f"Максимальная: {max_alt:.1f}")
                 print(f"Минимальная: {min_alt:.1f}")
                 print(f"Средняя: {avg_alt:.1f}")

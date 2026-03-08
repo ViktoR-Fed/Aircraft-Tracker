@@ -11,7 +11,7 @@ class JSONStorage(BaseStorage):
     Класс для сохранения информации о самолетах в JSON-файл
     """
 
-    def init(self, file_path: str = "data/aeroplanes.json"):
+    def __init__(self, file_path: str = "data/aeroplanes.json"):
         """
         Инициализация JSON хранилища
 

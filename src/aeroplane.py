@@ -19,7 +19,7 @@ class Aeroplane:
         "_icao24",
     ]
 
-    def init(
+    def __init__(
         self,
         callsign: str,
         origin_country: str,
@@ -43,14 +43,14 @@ class Aeroplane:
             latitude: Широта
             icao24: Уникальный идентификатор
         """
-        self._callsign = self._validate_callsign(callsign)
-        self._origin_country = self._validate_origin_country(origin_country)
-        self._velocity = self._validate_velocity(velocity)
-        self._baro_altitude = self._validate_altitude(baro_altitude)
-        self._on_ground = self._validate_on_ground(on_ground)
-        self._longitude = self._validate_longitude(longitude)
-        self._latitude = self._validate_latitude(latitude)
-        self._icao24 = self._validate_icao24(icao24)
+        self.callsign = callsign
+        self.origin_country = origin_country
+        self.velocity = velocity
+        self.baro_altitude = baro_altitude
+        self.on_ground = on_ground
+        self.longitude = longitude
+        self.latitude = latitude
+        self.icao24 = icao24
 
     # Приватные методы валидации
     def _validate_callsign(self, callsign: str) -> str:
@@ -101,47 +101,87 @@ class Aeroplane:
             raise ValueError("ICAO24 код должен быть строкой")
         return icao24.strip()
 
-    # Геттеры для атрибутов
+    # Геттеры и сеттеры для атрибутов
     @property
     def callsign(self) -> str:
         return self._callsign
+
+    @callsign.setter
+    def callsign(self, value: str):
+        """Сеттер для позывного с валидацией"""
+        self._callsign = self._validate_callsign(value)
 
     @property
     def origin_country(self) -> str:
         return self._origin_country
 
+    @origin_country.setter
+    def origin_country(self, value: str):
+        """Сеттер для страны с валидацией"""
+        self._origin_country = self._validate_origin_country(value)
+
     @property
     def velocity(self) -> Optional[float]:
         return self._velocity
+
+    @velocity.setter
+    def velocity(self, value: Optional[Union[float, int]]):
+        """Сеттер для скорости с валидацией"""
+        self._velocity = self._validate_velocity(value)
 
     @property
     def baro_altitude(self) -> Optional[float]:
         return self._baro_altitude
 
+    @baro_altitude.setter
+    def baro_altitude(self, value: Optional[Union[float, int]]):
+        """Сеттер для высоты с валидацией"""
+        self._baro_altitude = self._validate_altitude(value)
+
     @property
     def on_ground(self) -> bool:
         return self._on_ground
+
+    @on_ground.setter
+    def on_ground(self, value: bool):
+        """Сеттер для флага на земле с валидацией"""
+        self._on_ground = self._validate_on_ground(value)
 
     @property
     def longitude(self) -> Optional[float]:
         return self._longitude
 
+    @longitude.setter
+    def longitude(self, value: Optional[Union[float, int]]):
+        """Сеттер для долготы с валидацией"""
+        self._longitude = self._validate_longitude(value)
+
     @property
     def latitude(self) -> Optional[float]:
         return self._latitude
+
+    @latitude.setter
+    def latitude(self, value: Optional[Union[float, int]]):
+        """Сеттер для широты с валидацией"""
+        self._latitude = self._validate_latitude(value)
 
     @property
     def icao24(self) -> Optional[str]:
         return self._icao24
 
+    @icao24.setter
+    def icao24(self, value: Optional[str]):
+        """Сеттер для ICAO24 с валидацией"""
+        self._icao24 = self._validate_icao24(value)
+
     # Магические методы сравнения
-    def eq(self, other: "Aeroplane") -> bool:
+    def __eq__(self, other: "Aeroplane") -> bool:
         """Сравнение на равенство по скорости и высоте"""
         if not isinstance(other, Aeroplane):
             return False
         return self.velocity == other.velocity and self.baro_altitude == other.baro_altitude
 
-    def lt(self, other: "Aeroplane") -> bool:
+    def __lt__(self, other: "Aeroplane") -> bool:
         """Сравнение на меньше (по высоте)"""
         if not isinstance(other, Aeroplane):
             return NotImplemented
@@ -154,15 +194,15 @@ class Aeroplane:
             return False
         return self.baro_altitude < other.baro_altitude
 
-    def le(self, other: "Aeroplane") -> bool:
+    def __le__(self, other: "Aeroplane") -> bool:
         """Сравнение на меньше или равно (по высоте)"""
         return self < other or self == other
 
-    def gt(self, other: "Aeroplane") -> bool:
+    def __gt__(self, other: "Aeroplane") -> bool:
         """Сравнение на больше (по высоте)"""
         return not (self <= other)
 
-    def ge(self, other: "Aeroplane") -> bool:
+    def __ge__(self, other: "Aeroplane") -> bool:
         """Сравнение на больше или равно (по высоте)"""
         return not (self < other)
 
