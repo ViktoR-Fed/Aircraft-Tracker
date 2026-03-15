@@ -35,7 +35,8 @@ class JSONStorage(BaseStorage):
         try:
             with open(self._file_path, "r", encoding="utf-8") as file:
                 return json.load(file)
-        except (json.JSONDecodeError, FileNotFoundError):
+        except (json.JSONDecodeError, FileNotFoundError) as e:
+            print('Файл не существует, это не формат json')
             return []
         except Exception as e:
             print(f"Ошибка при чтении файла: {e}")
